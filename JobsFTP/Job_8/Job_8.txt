@@ -1,0 +1,4 @@
+sudo apt-get remove ftp
+sudo apt-get remove --auto-remove ftp
+sudo apt-get purge ftp
+sudo apt-get purge --auto-remove ftp

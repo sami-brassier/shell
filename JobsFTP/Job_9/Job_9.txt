@@ -1,0 +1,20 @@
+INPUT=./FTPUser.csv
+IFS=','
+while read USER ROLE PASSWORD
+do
+        if [ $USER = Utilisateurs ]; then return
+        else
+            echo "USER: $USER"
+            echo "ROLE: $ROLE"
+		echo "PSWD: $PASSWORD"
+            echo "-"
+		UserPSWD=$(perl -e 'print crypt("$PASSWORD", "password")')
+		sudo adduser--force-badname $USER
+		sudo useradd -m -p $UserPSWD $USER
+		if [ $ROLE = Admin ]; then
+			sudo adduser $USER sudo
+		fi
+		sudo mkhomedir_helper $USER
+            echo "---------------"
+        fi
+done < $INPUT
